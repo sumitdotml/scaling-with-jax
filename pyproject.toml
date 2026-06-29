@@ -1,0 +1,12 @@
+[project]
+name = "scaling-with-jax"
+version = "0.1.0"
+description = "JAX experiments for scaling-book preparation and small transformer work."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flax>=0.12.7",
+    "jax>=0.10.2",
+    "numpy>=2.4.3",
+    "optax>=0.2.8",
+]

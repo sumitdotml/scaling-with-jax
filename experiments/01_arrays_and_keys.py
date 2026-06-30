@@ -19,11 +19,14 @@ def main():
     print("sample_a:", sample_a)
     print("sample_b:", sample_b)
 
-    # TODO:
-    # 1. Change one more element of x without mutating x.
-    # 2. Generate a 2x3 random matrix.
-    # 3. Reuse key_a on purpose and observe what happens.
-    # 4. Write down why explicit keys are different from torch.manual_seed.
+    z = y.at[1].set(77.0)
+    print("updated z:", z)
+
+    rand_matrix = jax.random.uniform(key, shape=(2, 3))
+    print(rand_matrix)
+
+    reusing = jax.random.normal(key_a, (7,))
+    print(reusing)
 
 
 if __name__ == "__main__":

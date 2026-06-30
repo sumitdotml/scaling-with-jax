@@ -1,12 +1,12 @@
 # Learning Log
 
 Current topic: JAX foundations
-Current exercise: `jit` and tracing complete
+Current exercise: `grad` and `value_and_grad` complete
 Machine/environment: local uv environment
 JAX/jaxlib/backend: JAX 0.10.2, jaxlib 0.10.2, CPU backend
-Last known passing command: `uv run python experiments/02_jit_and_tracing.py`
+Last known passing command: `uv run python experiments/03_grad_and_value.py`
 Current failing command: none
-Last attempt: added cache reuse, dtype retracing, and static boolean examples
+Last attempt: added scalar gradients, params-tree gradients, and `tree.map` updates
 Current bug or confusion: none recorded
-Concepts learned: `jit` traces abstract values; static args are config and part of the cache key
-Next action: start `grad` and `value_and_grad`
+Concepts learned: `grad` returns functions; gradient trees match params; `tree.map` updates leaves
+Next action: start `vmap`

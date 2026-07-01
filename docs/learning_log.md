@@ -1,12 +1,12 @@
 # Learning Log
 
 Current topic: JAX foundations
-Current exercise: `vmap` complete
+Current exercise: `lax.scan` complete
 Machine/environment: local uv environment
 JAX/jaxlib/backend: JAX 0.10.2, jaxlib 0.10.2, CPU backend
-Last known passing command: `uv run python experiments/04_vmap.py`
+Last known passing command: `uv run python experiments/05_scan.py`
 Current failing command: none
-Last attempt: compared Python loop loss with vmapped per-example losses
+Last attempt: compared Python loop carry/output behavior with `lax.scan`
 Current bug or confusion: none recorded
-Concepts learned: `vmap` batches selected axes; `in_axes=(None, 0, 0)` shares params
-Next action: start `lax.scan`
+Concepts learned: `scan` carries state between steps and stacks per-step outputs
+Next action: start PyTrees

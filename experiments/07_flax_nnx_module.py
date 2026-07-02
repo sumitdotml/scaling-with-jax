@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as jnp
 from flax import nnx
+import optax
 
 
 class Model(nnx.Module):
@@ -34,21 +35,26 @@ if __name__ == "__main__":
     print(f"params: w {model.w[...].shape}, b {model.b[...].shape}")
     print(f"y: {y.shape}")
 
-    print("================ LOSS AND GRADS ==============")
-
-    loss, grads = nnx.value_and_grad(loss_fn)(model, x, target)
-    print(f"loss before update: {loss}")
-    print(f"grad shapes: w {grads['w'].shape}, b {grads['b'].shape}")
-
-    print("================ MANUAL UPDATE ===============")
-
+    print("============== OPTAX UPDATE ===============")
     learning_rate = 0.01
     params = nnx.state(model, nnx.Param)
-    updated_params = jax.tree.map(
-        lambda param, grad: param - learning_rate * grad, params, grads
-    )
+
+    optimizer = optax.sgd(learning_rate)
+    opt_state = optimizer.init(params)
+
+    loss, grads = nnx.value_and_grad(loss_fn)(model, x, target)
+    updates, opt_state = optimizer.update(grads, opt_state, params)
+    updated_params = optax.apply_updates(params, updates)
     nnx.update(model, updated_params)
+
     loss_after = loss_fn(model, x, target)
+    current_params = nnx.state(model, nnx.Param)
     print(f"learning rate: {learning_rate}")
+    print(f"loss before update: {loss}")
     print(f"loss after update: {loss_after}")
     print(f"loss change: {loss_after - loss}")
+    print(f"grad shapes: w {grads['w'].shape}, b {grads['b'].shape}")
+    print(
+        "current param shapes: "
+        f"w {current_params['w'].shape}, b {current_params['b'].shape}"
+    )

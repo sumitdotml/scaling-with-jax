@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
     print("============== OPTAX UPDATE ===============")
     learning_rate = 0.01
+    # taking a Param-only snapshot of this model's current w and b.
     params = nnx.state(model, nnx.Param)
 
     optimizer = optax.sgd(learning_rate)
@@ -48,6 +49,7 @@ if __name__ == "__main__":
     nnx.update(model, updated_params)
 
     loss_after = loss_fn(model, x, target)
+    # reading again after nnx.update because params was the old snapshot.
     current_params = nnx.state(model, nnx.Param)
     print(f"learning rate: {learning_rate}")
     print(f"loss before update: {loss}")

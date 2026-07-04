@@ -10,3 +10,6 @@ dependencies = [
     "numpy>=2.4.3",
     "optax>=0.2.8",
 ]
+
+[tool.ruff]
+line-length = 150

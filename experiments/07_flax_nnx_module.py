@@ -11,19 +11,23 @@ class Model(nnx.Module):
         self.b = nnx.Param(rngs.params.uniform((dout,)))
         self.din, self.dout = din, dout
 
-    def __call__(self, x: jax.Array):
+    def __call__(self, x: jax.Array) -> jax.Array:
         # reading Param arrays with [...] keeps this on the current NNX API.
         return x @ self.w[...] + self.b[...]
 
 
-def loss_fn(model: Model, x: jax.Array, target: jax.Array):
+def loss_fn(model: Model, x: jax.Array, target: jax.Array) -> jax.Array:
     pred = model(x)
     return jnp.mean((pred - target) ** 2)
 
 
 def train_step(
-    model: Model, optimizer, opt_state: tuple[...], x: jax.Array, target: jax.Array
-):
+    model: Model,
+    optimizer: optax.GradientTransformation,
+    opt_state: optax.OptState,
+    x: jax.Array,
+    target: jax.Array,
+) -> tuple[jax.Array, optax.OptState]:
     # reading the model's current Param state before this update.
     params = nnx.state(model, nnx.Param)
 
@@ -51,6 +55,9 @@ if __name__ == "__main__":
     params = nnx.state(model, nnx.Param)
 
     learning_rate = 0.01
+
+    # sgd returns a GradientTransformationExtraArgs, but the base Optax
+    # GradientTransformation type is enough for this train_step.
     optimizer = optax.sgd(learning_rate)
 
     opt_state = optimizer.init(params)

@@ -14,3 +14,7 @@ This is me learning JAX for scaling experiments, small transformer work, scaling
 8. [Flax NNX module and Optax update](experiments/07_flax_nnx_module.py)
 9. [Optax optimizer state](experiments/08_optax_state.py)
 10. [tiny synthetic regression](experiments/09_tiny_regression.py)
+
+## Notes
+
+1. [roofline intensity](notes/scaling-book/01-roofline-intensity.md)
